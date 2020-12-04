@@ -17,7 +17,7 @@
   "lint-staged": {
     "api/**/*.js": [
       "eslint --fix",
-      "prettier-eslint --write"
+      "npx prettier-eslint-cli --write"
     ]
   },
   "husky": {
