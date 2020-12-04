@@ -30,7 +30,7 @@ You can find the deployed project at [WEBSITE_DOMAIN_NAME](#).
 - Parse incoming form data through data-science API and return prediction-optimized travel itinerary
 - Enable client to save travel itineraries for future review (DS data will be retrieved accordingly)
 
-#### [Link to front end](https://labspt13-resfeber-b-be.herokuapp.com/)
+#### [Link to front end](#)
 
 #### [Back end](https://labspt13-resfeber-b-be.herokuapp.com/) deployed to Heroku
 
