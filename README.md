@@ -4,7 +4,7 @@ For steps on how to work with this repository [please see here](https://docs.lab
 
 # Project
 
-You can find the deployed project at [WEBSITE_DOMAIN_NAME](#).
+You can find the deployed project at [https://labspt13-resfeber-b-be.herokuapp.com/](https://labspt13-resfeber-b-be.herokuapp.com/).
 
 ## Contributors
 
@@ -30,7 +30,7 @@ You can find the deployed project at [WEBSITE_DOMAIN_NAME](#).
 - Parse incoming form data through data-science API and return prediction-optimized travel itinerary
 - Enable client to save travel itineraries for future review (DS data will be retrieved accordingly)
 
-#### [Link to front end](#)
+#### [Link to front end](https://github.com/Lambda-School-Labs/LabsPT13-Resfeber-B-Fe)
 
 #### [Back end](https://labspt13-resfeber-b-be.herokuapp.com/) deployed to Heroku
 
