@@ -28,31 +28,21 @@ exports.up = (knex) => {
         .unsigned()
         .references('profiles.id')
         .onDelete('cascade');
-      table.float('lat', 18, 15);
-      table.float('lon', 18, 15);
-      table.string('destName');
-    })
-    .createTable('itineraries_destinations', function (table) {
-      table
+        table
         .integer('itinerary_id')
         .notNullable()
         .unsigned()
         .references('itineraries.id')
         .onDelete('cascade');
-      table
-        .integer('destination_id')
-        .notNullable()
-        .unsigned()
-        .references('destinations.id')
-        .onDelete('cascade');
-
-      table.primary(['itinerary_id', 'destination_id']);
+      table.float('lat', 18, 15);
+      table.float('lon', 18, 15);
+      table.string('destName');
+      
     });
 };
 
 exports.down = (knex) => {
   return knex.schema
-    .dropTableIfExists('itineraries_destinations')
     .dropTableIfExists('destinations')
     .dropTableIfExists('itineraries')
     .dropTableIfExists('profiles');

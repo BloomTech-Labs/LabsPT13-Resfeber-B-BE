@@ -3,6 +3,8 @@ const uniqueNamesGenerator = uNG.uniqueNamesGenerator;
 const colors = uNG.colors;
 const adjectives = uNG.adjectives;
 const animals = uNG.animals;
+const okta_ID = '00u13ol5x1kmKxVJU4x7';
+
 const Config = {
   dictionaries: [adjectives, colors, animals],
 };
@@ -18,7 +20,8 @@ function getRandCoords(arg) {
 }
 
 const destinations = [...new Array(5)].map((i, idx) => ({
-  user_id: idx + 1,
+  user_id: idx === 0 ? okta_ID : idx,
+  itinerary_id: idx + 1,
   lat: getRandCoords('lat'),
   lon: getRandCoords('lon'),
   destName: uniqueNamesGenerator(Config),
