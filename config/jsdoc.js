@@ -23,6 +23,18 @@ module.exports = {
         name: 'data',
         description: 'Operations for data science service',
       },
+      {
+        name: 'itineraries',
+        description: 'Operations for itineraries',
+      },
+            {
+        name: 'destinations',
+        description: 'Operations for adding and removing destinations from itineraries',
+      },
+            {
+        name: 'pinned',
+        description: 'Operations for pinning destinations',
+      },
     ],
     externalDocs: {
       description: 'Data Science scaffold service docs',
