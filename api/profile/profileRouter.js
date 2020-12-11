@@ -2,8 +2,6 @@ const express = require('express');
 const authRequired = require('../middleware/authRequired');
 const Profiles = require('./profileModel');
 const router = express.Router();
-const Itineraries = require('../itineraries/itinerariesModel');
-const pinnedId = 'Sedwhqjkbqjyediseturhuqauh';
 
 /**
  * @swagger
@@ -170,15 +168,6 @@ router.post('/', authRequired, async (req, res) => {
         if (pf == undefined) {
           //profile not found so lets insert it
           await Profiles.create(profile).then(async (profile) => {
-            const pinned_itinerary = {
-              user_id: profile.id,
-              title: pinnedId,
-              description: 'default -pinned- table',
-              finished: null,
-            };
-
-            await Itineraries.postItinerary(pinned_itinerary);
-
             res
               .status(200)
               .json({ message: 'profile created', profile: profile[0] });
