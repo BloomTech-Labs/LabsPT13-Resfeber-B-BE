@@ -2,7 +2,7 @@ exports.up = (knex) => {
   return knex.schema
     .raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"')
     .createTable('profiles', function (table) {
-      table.increments('id').primary();
+      table.string('id').primary();
       table.string('email').unique();
       table.string('name');
       table.string('avatarUrl');
@@ -11,7 +11,7 @@ exports.up = (knex) => {
     .createTable('itineraries', function (table) {
       table.increments('id').primary();
       table
-        .integer('user_id')
+        .string('user_id')
         .notNullable()
         .unsigned()
         .references('profiles.id')
@@ -23,12 +23,11 @@ exports.up = (knex) => {
     .createTable('destinations', function (table) {
       table.increments('id').primary();
       table
-        .integer('user_id')
+        .string('user_id')
         .notNullable()
-        .unsigned()
         .references('profiles.id')
         .onDelete('cascade');
-        table
+      table
         .integer('itinerary_id')
         .notNullable()
         .unsigned()
@@ -37,7 +36,6 @@ exports.up = (knex) => {
       table.float('lat', 18, 15);
       table.float('lon', 18, 15);
       table.string('destName');
-      
     });
 };
 
