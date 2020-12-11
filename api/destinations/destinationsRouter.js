@@ -216,7 +216,7 @@ router.delete('/pinned/:destination_id', authRequired, function (req, res) {
 
 /**
 * @swagger
-* /destinations/{itinerary_id}:
+* /destinations/{itinerary_id}/{destination_id}:
 *  delete:
 *    description: Delete (remove) a destination from user profile
 *    summary: Remove a destination from a specific itinerary in user profile
