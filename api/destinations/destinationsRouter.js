@@ -56,6 +56,50 @@ router.get('/pinned', authRequired, function (req, res) {
 });
 
 /**
+ * @swagger
+ * /destinations/{destination_id}:
+ *  get:
+ *    description: Get a destination by its internal ID
+ *    summary: Returns a destination
+ *    security:
+ *      - okta: []
+ *    tags:
+ *      - destinations
+ *    responses:
+ *      200:
+ *        description: array containing one destination
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/components/schemas/Destination'
+ *              example:
+ *                - destination_id: 896
+ *                  destName: 'San Francisco'
+ *                  lat: 37.7749
+ *                  lon: 122.4194
+
+ *
+ *      401:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ *      403:
+ *        $ref: '#/components/responses/UnauthorizedError'
+ */
+
+router.get('/:id', authRequired, function (req, res) {
+  const user_id = req.profile.id;
+  const destination_id = req.params.id;
+  Destinations.getDestination(user_id, destination_id)
+    .then((itinerary) => {
+      res.status(200).json(itinerary);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: err.message });
+    });
+});
+
+/**
 * @swagger
 * /destinations/pinned:
 *  post:
@@ -95,7 +139,12 @@ router.post('/pinned', authRequired, function (req, res) {
   const destName = req.body.destName;
   const lat = req.body.lat;
   const lon = req.body.lon;
-
+  if (lat == null || lon == null) {
+    res.status(400).json({
+      message:
+        'Please include fields for lat and lon in your http request body. { lat: yourVal, lon: yourVal, destname: `yourDestName`}',
+    });
+  }
   const destination = { user_id, destName, lat, lon };
 
   Destinations.addDestination(destination, true)
@@ -149,7 +198,12 @@ router.post('/:itinerary_id', authRequired, function (req, res) {
   const destName = req.body.destName;
   const lat = req.body.lat;
   const lon = req.body.lon;
-
+  if (lat == null || lon == null) {
+    res.status(400).json({
+      message:
+        'Please include fields for lat and lon in your http request body. { lat: yourVal, lon: yourVal}',
+    });
+  }
   const destination = { user_id, itinerary_id, destName, lat, lon };
 
   Destinations.addDestination(destination)
@@ -216,7 +270,7 @@ router.delete('/pinned/:destination_id', authRequired, function (req, res) {
 
 /**
 * @swagger
-* /destinations/{itinerary_id}/{destination_id}:
+* /destinations/{destination_id}:
 *  delete:
 *    description: Delete (remove) a destination from user profile
 *    summary: Remove a destination from a specific itinerary in user profile
@@ -245,10 +299,7 @@ router.delete('/pinned/:destination_id', authRequired, function (req, res) {
 *        $ref: '#/components/responses/UnauthorizedError'
 */
 
-router.delete('/:itinerary_id/:destination_id', authRequired, function (
-  req,
-  res
-) {
+router.delete('/:destination_id', authRequired, function (req, res) {
   const destination_id = req.params.destination_id;
   const itinerary_id = req.params.itinerary_id;
   const user_id = req.profile.id;
