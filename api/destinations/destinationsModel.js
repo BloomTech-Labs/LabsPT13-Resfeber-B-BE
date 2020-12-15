@@ -5,6 +5,7 @@ module.exports = {
   deleteDestination,
   getPinnedDestinations,
   unpinDestination,
+  getDestination,
 };
 //helpers go here
 
@@ -69,7 +70,6 @@ async function deleteDestination(user_id, itinerary_id, destination_id) {
   return db('destinations as d')
     .where('d.id', destination_id)
     .andWhere('d.user_id', user_id)
-    .andWhere('d.itinerary_id', itinerary_id)
     .del();
 }
 
@@ -85,4 +85,9 @@ async function unpinDestination(user_id, destination_id) {
     .andWhere('d.user_id', user_id)
     .andWhere('d.itinerary_id', itinerary_id)
     .del();
+}
+function getDestination(user_id, destination_id) {
+  return db('destinations as d')
+    .where('d.user_id', user_id)
+    .andWhere('d.id', destination_id);
 }
