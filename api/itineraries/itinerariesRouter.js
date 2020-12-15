@@ -211,12 +211,11 @@ router.get('/:id', authRequired, function (req, res) {
  *      403:
  *        $ref: '#/components/responses/UnauthorizedError'
  */
-
 //POST - post an itinerary to the user profile
 router.post('/', authRequired, function (req, res) {
   const user_id = req.profile.id;
   const itinerary = { ...req.body, user_id, finished: false };
-  if (!itinerary.hasOwnProperty('title')) {
+  if (!Object.prototype.hasOwnProperty.call(itinerary, 'title')) {
     res.status(400).json({
       message:
         'Please include the itinerary title in the http request. Example: { title: "the long commute"} (optional key) - description: "money-saving road trip routes"',
