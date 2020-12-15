@@ -76,12 +76,19 @@ const Itineraries = require('../itineraries/itinerariesModel');
  *                  title: 'Elise`s trip'
  *                  description: 'our favorite route'
  *                  finished: 'false'
+ *                  destinations: {
+ *                    destName: "your destination",
+ *                    lat: 42,
+ *                    lon: 150}
  *                - itinerary_id: '2'
  *                  user_id: '013e4ab94d96542e791f'
  *                  title: '2020 vacation plans'
  *                  description: 'we had to cancel this one :('
  *                  finished: 'true'
- *
+ *                  destinations: {
+ *                    destName: "your other destination",
+ *                    lat: 79,
+ *                    lon: 155}
  *      401:
  *        $ref: '#/components/responses/UnauthorizedError'
  *      403:
@@ -125,8 +132,11 @@ router.get('/', authRequired, function (req, res) {
  *                  title: 'Elise`s trip'
  *                  description: 'our favorite route'
  *                  finished: 'false'
+ *                  destinations: {
+ *                    destName: "your destination",
+ *                    lat: 42,
+ *                    lon: 150}
  *
-
  *      401:
  *        $ref: '#/components/responses/UnauthorizedError'
  *      403:
@@ -134,8 +144,14 @@ router.get('/', authRequired, function (req, res) {
  */
 
 router.get('/:id', authRequired, function (req, res) {
-  console.log('okay');
-  const itinId = req.params.id;
+  let itinId = req.params.id;
+  itinId = parseInt(itinId);
+  if (!Number.isInteger(itinId)) {
+    res.status(400).json({
+      message:
+        'Please include the itinerary id in the URL with these parameters: /itineraries/{id}',
+    });
+  }
   const user_id = req.profile.id;
   Itineraries.getSingleItinerary(user_id, itinId)
     .then((itinerary) => {
@@ -200,6 +216,12 @@ router.get('/:id', authRequired, function (req, res) {
 router.post('/', authRequired, function (req, res) {
   const user_id = req.profile.id;
   const itinerary = { ...req.body, user_id, finished: false };
+  if (!itinerary.hasOwnProperty('title')) {
+    res.status(400).json({
+      message:
+        'Please include the itinerary title in the http request. Example: { title: "the long commute"} (optional key) - description: "money-saving road trip routes"',
+    });
+  }
   Itineraries.postItinerary(itinerary)
     .then((insertRes) => {
       res.status(200).json({
@@ -253,7 +275,6 @@ router.post('/', authRequired, function (req, res) {
  *        $ref: '#/components/responses/UnauthorizedError'
  */
 
-//POST - post an itinerary to the user profile
 router.put('/:id', authRequired, function (req, res) {
   const user_id = req.profile.id;
   const itinerary_id = req.params.id;
@@ -302,7 +323,6 @@ router.put('/:id', authRequired, function (req, res) {
  *        $ref: '#/components/responses/UnauthorizedError'
  */
 
-//POST - post an itinerary to the user profile
 router.delete('/:id', authRequired, function (req, res) {
   const user_id = req.profile.id;
   const itinerary_id = req.params.id;
