@@ -4,7 +4,8 @@ module.exports = {
     info: {
       title: 'Resfeber',
       version: '0.1.0',
-      description: 'resfeber',
+      description:
+        'Welcome to the Resfeber API documentation! The endpoints below will allow you to manage all CRUD operations for users, itineraries, destinations, and pinned destinations. Data science endpoints are currently not operational but their schemas have been included for reference',
       license: {
         name: 'MIT',
         url: 'https://en.wikipedia.org/wiki/MIT_License',
@@ -22,6 +23,19 @@ module.exports = {
       {
         name: 'data',
         description: 'Operations for data science service',
+      },
+      {
+        name: 'itineraries',
+        description: 'Operations for itineraries',
+      },
+      {
+        name: 'destinations',
+        description:
+          'Operations for adding and removing destinations from itineraries',
+      },
+      {
+        name: 'pinned',
+        description: 'Operations for pinning destinations',
       },
     ],
     externalDocs: {

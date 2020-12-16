@@ -1,4 +1,6 @@
 const db = require('../../data/db-config');
+const Itineraries = require('../itineraries/itinerariesModel');
+const pinnedId = 'Sedwhqjkbqjyediseturhuqauh';
 
 const findAll = async () => {
   return await db('profiles');
@@ -13,7 +15,15 @@ const findById = async (id) => {
 };
 
 const create = async (profile) => {
-  return db('profiles').insert(profile).returning('*');
+  const profilePromise = await db('profiles').insert(profile).returning('*');
+
+  await Itineraries.postItinerary({
+    user_id: profile.id,
+    title: pinnedId,
+    description: null,
+    finished: null,
+  });
+  return profilePromise;
 };
 
 const update = (id, profile) => {

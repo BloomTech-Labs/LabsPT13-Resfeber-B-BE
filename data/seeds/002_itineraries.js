@@ -1,12 +1,15 @@
 const uNG = require('unique-names-generator');
 const uniqueNamesGenerator = uNG.uniqueNamesGenerator;
 const names = uNG.names;
+const okta_ID = '00u13ol5x1kmKxVJU4x7';
+const pinnedId = 'Sedwhqjkbqjyediseturhuqauh';
+
 const Config = {
   dictionaries: [names],
 };
 const itineraries = [...new Array(5)].map((i, idx) => ({
-  user_id: idx + 1,
-  title: `${uniqueNamesGenerator(Config)}'s trip`,
+  user_id: idx === 0 ? okta_ID : idx,
+  title: idx === 0 ? pinnedId : `${uniqueNamesGenerator(Config)}'s trip`,
   description: 'our favorite route',
   finished: false,
 }));
